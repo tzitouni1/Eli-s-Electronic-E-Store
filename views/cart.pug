@@ -1,0 +1,50 @@
+extends base
+
+block content
+  main.main
+    .cart-form
+      h2.heading-secondary.ma-bt-lg My Cart
+      div.cart
+        if orderItems && orderItems.length > 0
+          - var subtotal = 0;
+          each item in orderItems
+            div.cart-item
+              img.item-image(src=`/img/${item.itemimage}` alt= 'error')
+              div.item-name= ` ${item.name}`
+              div.item-price= `$ ${item.price}`
+              div.item-price= `Quantity ${item.quantity}`
+              button.delete-btn(onclick=`deleteItem(${item.productid}, ${item.orderid})`) Delete
+              - subtotal += item.price * item.quantity
+          div.item-price= `Subtotal: ${subtotal.toFixed(2)}`
+          br
+          br
+          //- button.btn.btn--green Checkout
+          a.btn.btn--green(href='/checkout') Checkout
+        else
+          div.item-price= `Your cart is currently empty.`
+
+    script.
+      function deleteItem(productId, orderId) {
+        fetch('/delete-item', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // Add CSRF token if needed
+          },
+          body: JSON.stringify({ productid: productId, orderid: orderId })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            // Handle successful deletion - e.g., refresh the page or remove the item from the UI
+            window.location.reload();
+          } else {
+            alert('Error deleting item');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while deleting the item');
+        });
+      }
+

@@ -1,0 +1,19 @@
+extends base
+
+block content
+    main.main
+        include _employeeSearch
+        .card-container
+
+            each listing in listings
+                .card
+                    .card__header
+                        .card__picture
+                            .card__picture-overlay &nbsp;
+                            img.card__picture-img(src=`/img/${listing.itemimage}` , alt='error')
+                        h3.heading-tertirary
+                            span  #{listing.name}
+                    .card__footer
+                        p
+                        a.btn.btn--green.btn--small(href=`/update-product/${listing.productid}`) Update
+                        //- span.card__footer-value $ #{listing.price}

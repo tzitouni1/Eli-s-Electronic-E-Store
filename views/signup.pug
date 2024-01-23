@@ -1,0 +1,29 @@
+extends base
+
+block content
+  main.main
+    .login-form
+      h2.heading-secondary.ma-bt-lg Create your account
+      
+      form.form.form--login(action='/signup' method='post')
+          .form__group
+            label.form__label First Name
+            input.form__input(type='text' name='firstname' required)
+          .form__group
+            label.form__label Last Name
+            input.form__input(type='text' name='lastname' required)
+          .form__group
+            label.form__label Email
+            input.form__input(type='email' name='email' required)
+          .form__group
+            label.form__label Password
+            input.form__input(type='password' name='password' required, minlength='6')
+          .form__group
+            label.form__label Address
+            input.form__input(type='text' name='address' required)
+          .form__group
+            label.form__label Phone Number
+            input.form__input(type='tel' name='phone' required)
+          .form__group
+            button.btn.btn--green(type='submit') Register
+            

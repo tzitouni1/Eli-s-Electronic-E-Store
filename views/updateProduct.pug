@@ -1,0 +1,81 @@
+extends base
+
+block content
+    main.main
+        body.productpage
+            .product-container
+              .details
+                br
+                h2.heading-secondary.ma-bt-lg Update Product: #{product.name}
+                br
+                img.product-image(src=`/img/${product.itemimage}` alt=product.name)
+                br
+                br
+                form(action='/apply-product-update/' + product.productid method='post')
+                  
+                  .form__group
+                    label.form__label(for='name') Name
+                    input.form__input(type='text' name='name' value=product.name)
+                  .form__group
+                    label.form__label(for='description') Description
+                    textarea.form__input(name='description')= product.description
+                  .form__group
+                    label.form__label(for='price') Price
+                    input.form__input(type='number' name='price' value=product.price)
+                  .form__group
+                    label.form__label(for='stock') Stock
+                    input.form__input(type='number' name='stock' value=product.stock)
+                  .form__group
+                    label.form__label(for='itemimage') Item Image
+                    input.form__input(type='text' name='itemimage' value=product.itemimage)
+                  .form__group
+                    label.form__label(for='category') Category
+                    input.form__input(type='text' name='category' value=product.category)
+
+                  // The laptop table has the attributes processor, ram, storage, screenspecs, productid
+                  if product.category === 'Laptops'
+                    .form__group
+                      label.form__label(for='processor') Processor
+                      input.form__input(type='text' name='processor' value=product.processor)
+                    .form__group
+                      label.form__label(for='ram') RAM
+                      input.form__input(type='text' name='ram' value=product.ram)
+                    .form__group
+                      label.form__label(for='storage') Storage
+                      input.form__input(type='text' name='storage' value=product.storage)
+                    .form__group
+                      label.form__label(for='screenspecs') Screen Specs
+                      input.form__input(type='text' name='screenspecs' value=product.screenspecs)
+
+                  //The camera table has the attributes resolution, lenstype, cameratype
+                  if product.category === 'Cameras'
+                    .form__group
+                      label.form__label(for='resolution') Resolution
+                      input.form__input(type='text' name='resolution' value=product.resolution)
+                    .form__group
+                      label.form__label(for='lenstype') Lens Type
+                      input.form__input(type='text' name='lenstype' value=product.lenstype)
+                    .form__group
+                      label.form__label(for='cameratype') Camera Type
+                      input.form__input(type='text' name='cameratype' value=product.cameratype)
+
+                  //The cellphone table has the attributes cameraresolution, storage, dimensions, 
+                  if product.category === 'Cellphones'
+                    .form__group
+                      label.form__label(for='cameraresolution') Camera Resolution
+                      input.form__input(type='text' name='cameraresolution' value=product.cameraresolution)
+                    //- .form__group
+                    //-   label.form__label(for='storage') Storage
+                    //-   input.form__input(type='text' name='storage' value=product.storage)
+                    .form__group
+                      label.form__label(for='dimensions') Dimensions
+                      input.form__input(type='text' name='dimensions' value=product.dimensions)
+
+                  br
+                  br
+
+                      
+                  button#addToCartButton.btn.btn--green(type='submit') Update Product
+                        
+                      
+              

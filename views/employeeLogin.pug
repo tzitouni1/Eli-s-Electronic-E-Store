@@ -1,0 +1,21 @@
+extends base
+
+block content
+  main.main
+    .login-form
+      h2.heading-secondary.ma-bt-lg Employee Login
+      form#employeeLoginForm.form.form--login(action='/employeeLogin' method='post')
+        .form__group
+          label.form__label(for='employeeid') Employee ID
+          input#email.form__input(type='text' name='employeeid', placeholder='111111111', minlength='9', required)
+        .form__group.ma-bt-md
+          label.form__label(for='password') Password
+          input#password.form__input(type='password' name='password', placeholder='••••••••', required, minlength='6')
+        .form__group
+          button.btn.btn--green(type='submit')  Login
+          br
+          br
+          a.form__label(href='/login') Are you an user? Login Here!
+          form
+      
+            

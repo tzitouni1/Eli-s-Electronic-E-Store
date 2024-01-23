@@ -1,0 +1,67 @@
+//- section.overview
+
+//- section.search-section
+//-     input#searchBar(type="text" placeholder="Search for a product...")
+    
+//-     button.search-btn#allButton(onclick="search('all')") All
+//-     button.search-btn#cameraButton(onclick="search('camera')") Camera
+//-     button.search-btn#computerButton(onclick="search('computer')") Computer
+//-     button.search-btn#phoneButton(onclick="search('phone')") Phone
+
+//-     div#results
+//-         //- Results will be populated here
+
+//- script.
+//-     function search(category) {
+//-         const searchTerm = document.getElementById("searchBar").value;
+        
+//-         fetch(`/api/search?searchTerm=${searchTerm}&category=${category}`)
+//-             .then(response => response.json())
+//-             .then(data => {
+//-                 const resultsDiv = document.getElementById("results");
+//-                 resultsDiv.innerHTML = '';  // Clear previous results
+
+//-                 if (data.length === 0) {
+//-                     resultsDiv.innerHTML = '<p>No results found.</p>';
+//-                     return;
+//-                 }
+
+//-                 data.forEach(product => {
+//-                     const productDiv = document.createElement("div");
+//-                     productDiv.className = "product";
+//-                     productDiv.innerHTML = `
+//-                         <h2>${product.name}</h2>
+//-                         <p>${product.description}</p>
+//-                         <p>Price: ${product.price}</p>
+//-                     `;
+
+//-                     resultsDiv.appendChild(productDiv);
+//-                 });
+//-             })
+//-             .catch(error => {
+//-                 console.error("Error fetching products:", error);
+//-             });
+//-     }
+
+//-     // Initial search to show all products when the page loads
+//-     search('all');
+//-  Search bar and filter buttons
+
+form.search-form(action='/search' method='get')
+      div.search-bar
+        input.search-input(type='text' name='query' placeholder='Search...' value=(searchParams && searchParams.query) ? searchParams.query : '')
+        input.filter-button(type='number' name='minPrice' placeholder='Min Price' value=(searchParams && searchParams.minPrice) ? searchParams.minPrice : '')
+        input.filter-button(type='number' name='maxPrice' placeholder='Max Price' value=(searchParams && searchParams.maxPrice) ? searchParams.maxPrice : '')
+
+        // Filter buttons
+        button.filter-button(type='submit' name='filter' value='all') All
+        button.filter-button(type='submit' name='filter' value='phones') Phones
+        button.filter-button(type='submit' name='filter' value='computers') Computers
+        button.filter-button(type='submit' name='filter' value='cameras') Cameras
+
+    
+br 
+br
+br
+
+

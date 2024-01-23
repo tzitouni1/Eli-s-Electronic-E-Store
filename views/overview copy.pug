@@ -1,0 +1,21 @@
+extends base
+
+block content
+    main.main
+        include _search
+
+        .card-container
+
+            each price, n in {'iPhone 14': 1000, 'iPhone 13': 800, 'MacBook Pro': 2000, 'Canon SL2': 400, 'Surface Pro': 1500, 'Leica': 700, 'HP Spectre': 900, 'Samsung s22': 1100, 'Google Pixel 3': 700}
+                .card
+                    .card__header
+                        .card__picture
+                            .card__picture-overlay &nbsp;
+                            img.card__picture-img(src=`/img/Logo.png`, alt=`error`)
+                        h3.heading-tertirary
+                            span  #{n}
+                    .card__footer
+                        p
+                        a.btn.btn--green.btn--small(href=`/product`) See More
+                        span.card__footer-value $ #{price}
+                

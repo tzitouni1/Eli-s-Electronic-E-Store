@@ -1,0 +1,18 @@
+form.search-form(action='/employeeSearch' method='get')
+      div.search-bar
+        input.search-input(type='text' name='query' placeholder='Search...' value=(searchParams && searchParams.query) ? searchParams.query : '')
+        input.filter-button(type='number' name='minPrice' placeholder='Min Price' value=(searchParams && searchParams.minPrice) ? searchParams.minPrice : '')
+        input.filter-button(type='number' name='maxPrice' placeholder='Max Price' value=(searchParams && searchParams.maxPrice) ? searchParams.maxPrice : '')
+
+        // Filter buttons
+        button.filter-button(type='submit' name='filter' value='all') All
+        button.filter-button(type='submit' name='filter' value='phones') Phones
+        button.filter-button(type='submit' name='filter' value='computers') Computers
+        button.filter-button(type='submit' name='filter' value='cameras') Cameras
+
+    
+br 
+br
+br
+
+

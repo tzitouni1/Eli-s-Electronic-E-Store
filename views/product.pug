@@ -1,0 +1,62 @@
+extends base
+
+block content
+    main.main
+        body.productpage
+            .product-container
+                img.product-image(src=`/img/${product.itemimage}` alt=product.name)
+                .details
+                    h1= product.name
+                    p <strong>Description: </strong> #{product.description}
+                    p <strong>Price: </strong> $#{product.price}
+                    p <strong>Stock: </strong> #{product.stock}
+                    //- p <strong> id: </strong> #{product.productid}
+                    if categoryDetails
+                        case product.category
+                            when 'Laptops'
+                                p <strong> Processor: </strong> #{categoryDetails.processor}
+                                p <strong> RAM: </strong> #{categoryDetails.ram}
+                                p <strong> Storage: </strong> #{categoryDetails.storage}
+                                p <strong> Screen Specs: </strong> #{categoryDetails.screenspecs}
+                            when 'Cameras'
+                                p <strong> Resolution: </strong> #{categoryDetails.resolution}
+                                p <strong> Lens Type: </strong> #{categoryDetails.lenstype}
+                                p <strong> Camera Type: </strong> #{categoryDetails.cameratype}
+                            when 'Cellphones'
+                                p <strong> Camera Resolution: </strong> #{categoryDetails.cameraresolution}
+                                p <strong> Storage: </strong> #{categoryDetails.storage}
+                                p <strong> Dimensions</strong> #{categoryDetails.dimensions}
+                    br
+                    br
+
+                    if user
+                         button#addToCartButton.btn.btn--green(type='button') Add to Cart
+                       
+                    else
+                        button.btn.btn--red(disabled) Log in to add items to cart
+
+
+    script.
+      document.getElementById('addToCartButton').addEventListener('click', function() {
+        console.log("test")
+        fetch('/add-to-order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // If you have CSRF protection, add your CSRF token here
+          },
+          body: JSON.stringify({ productid: #{product.productid} })
+        })
+        .then(response => {
+          if (response.ok) {
+            alert('Item added to your order');
+          } else {
+            alert('Error adding item to order');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while adding the item to your order');
+        });
+      });
+

@@ -1,0 +1,62 @@
+extends base
+
+block content
+   main.main
+        .cart-form
+
+            h2.heading-secondary.ma-bt-lg Checkout
+            div.cart
+                form#checkoutForm(action='/process-checkout' method='post')
+                    .form__group
+                        label.form__label(for='fname') First Name
+                        input.form__input(type='text' name='fname' id='fname' value=user.firstname required)
+                    .form__group
+                        label.form__label(for='lname') Last Name
+                        input.form__input(type='text' name='lname' id='lname' value=user.lastname required)
+
+                    .form__group
+                        label.form__label(for='shippingAddress') Shipping Address
+                        input.form__input(type='text' name='shippingAddress' id='shippingAddress' value=user.address required)
+
+                    // Other fields
+                    .form__group
+                        label.form__label(for='paymentType') Payment Type
+                        select.selection(name='paymentType' id='paymentType' required)
+                            option(value='Credit') Credit Card
+                            option(value='Debit') Debit Card
+                        // Add more payment options as necessary
+
+                    .form__group
+                        label.form__label(for='cardNumber') Card Number
+                        input.form__input(type='text' name='cardNumber' id='cardNumber' required, minlength='16', maxlength='16')
+
+                    // Add other necessary fields
+
+                    button.btn.btn--green(type='submit') Complete Purchase
+        script.
+            document.getElementById('checkoutForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                fetch('/process-checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add CSRF token if needed
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+                })
+                .then(response => response.json())
+                .then(data => {
+                if (data.success) {
+                    alert('Checkout complete');
+                    window.location.href = '/'; // Redirect to the main page
+                } else {
+                    alert('Checkout error: ' + data.message);
+                    // Stay on the page for information to be corrected
+                }
+                })
+                .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during checkout');
+                });
+            });

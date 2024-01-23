@@ -1,0 +1,20 @@
+extends base
+
+block content
+  main.main
+    .login-form
+      h2.heading-secondary.ma-bt-lg Sign into your account
+      form.form.form--login(action='/login' method='post')
+        .form__group
+          label.form__label(for='email') Email address
+          input#email.form__input(type='email' name='email', placeholder='you@example.com', required)
+        .form__group.ma-bt-md
+          label.form__label(for='password') Password
+          input#password.form__input(type='password' name='password', placeholder='••••••••', required, minlength='6')
+        .form__group
+          button.btn.btn--green(type='submit')  Login
+          br
+          br
+          a.form__label(href='/employeeLogin') Are you an employee? Login Here!
+          form
+      

@@ -1,0 +1,94 @@
+
+extends base
+
+block content
+    main.main
+        body
+            .cart-form
+                h2.heading-secondary.ma-bt-lg Update Orders
+                div.cart
+                    div.search-bar
+                        input#orderSearch.search-input(type='text' placeholder='Search by Order ID')
+                        br
+                        br
+                    form#updateForm(method='post' action='/apply-order-updates')
+                        br
+                        br
+                        h2 Orders: 
+                        br
+                        div#searchResults
+                            each order in orders
+                                div.cart-item
+                                    div.item-label Order ID: #{order.orderid}
+                                    div.item-label Payment ID: #{order.paymentid}
+                                    div.item-label Total: $#{order.amount}
+                                    //- div.item-label Shipping Address: #{order.shippingaddress}
+                                    div.item-label Payment Status:
+                                    select(name=`paymentStatus-${order.paymentid}`)
+                                        option(value=`${order.paymentstatus}`) #{order.paymentstatus}
+                                        if (order.paymentstatus == "Pending")
+                                            option(value='Completed') Completed
+                                        if (order.paymentstatus == "Completed")
+                                            option(value='Pending') Pending
+                                    div.item-label Order Status:
+                                    select(name=`orderStatus-${order.orderid}`)
+                                        option(value=`${order.status}`) #{order.status}
+                                        if (order.status == "Processing" && order.paymentstatus == "Completed")
+                                            option(value='Shipped') Shipped
+                                            option(value='Delivered') Delivered
+                                        if (order.status == "Shipped" && order.paymentstatus == "Completed")
+                                            option(value='Processing') Processing
+                                            option(value='Delivered') Delivered
+                                        if (order.status == "Delivered" && order.paymentstatus == "Completed")
+                                            option(value='Processing') Processing
+                                            option(value='Shipped') Shipped
+                                           
+                        button.btn.btn--green(type='submit') Save All Changes
+                            
+
+    script.
+        const searchBox = document.getElementById('orderSearch');
+        const resultsContainer = document.getElementById('searchResults');
+
+        searchBox.addEventListener('input', function() {
+            const query = this.value;
+            fetch(`/search-orders?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(orders => {
+                resultsContainer.innerHTML = ''; // Clear previous results
+
+                orders.forEach(order => {
+                // Create a div element for each order
+                const orderDiv = document.createElement('div');
+                orderDiv.className = 'cart-item';
+                
+                // Add order details to the div
+                orderDiv.innerHTML = `
+                    <div class="item-label">Order ID: ${order.orderid}</div>
+                    <div class="item-label">Payment ID: ${order.paymentid}</div>
+                    <div class="item-label">Total: $${order.amount}</div>
+                    <div class="item-label"> Payment Status: </div>
+                    <select name="paymentStatus-${order.paymentid}">
+                        <option value="${order.paymentstatus}" selected>${order.paymentstatus}</option>
+                        ${order.paymentstatus !== 'Pending' ? `<option value="Pending">Pending</option>` : ''}
+                        ${order.paymentstatus !== 'Completed' ? `<option value="Completed">Completed</option>` : ''}
+                        ${order.paymentstatus !== 'Failed' ? `<option value="Failed">Failed</option>` : ''}
+                    </select>
+                    <div class="item-label"> Order Status: </div>
+                    <select name="orderStatus-${order.orderid}">
+                        <option value="${order.status}" selected>${order.status}</option>
+                        ${order.status !== 'Processing' ? `<option value="Processing">Processing</option>` : ''}
+                        ${order.status !== 'Shipped' ? `<option value="Shipped">Shipped</option>` : ''}
+                        ${order.status !== 'Delivered' ? `<option value="Delivered">Delivered</option>` : ''}
+                    </select>
+                `;
+
+                // Append the div to the container
+                resultsContainer.appendChild(orderDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultsContainer.innerHTML = 'Error loading orders.';
+            });
+        });

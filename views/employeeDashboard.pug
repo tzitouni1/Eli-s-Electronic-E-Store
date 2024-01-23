@@ -1,0 +1,13 @@
+extends base
+
+block content
+  main.main
+    .login-form
+        h2.heading-secondary.ma-bt-lg Employee Dashboard
+        .form__group
+            a(href='/employeeOverview')
+                button.btn.btn--green Update Product Listings
+        .form__group
+            // Button to update orders and payments
+            a(href='/updateOrder')
+                button.btn.btn--green Update Orders/Payments

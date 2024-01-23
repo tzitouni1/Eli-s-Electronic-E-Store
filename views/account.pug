@@ -1,0 +1,59 @@
+extends base
+
+block content
+    main.main
+        .cart-form
+            h2.heading-secondary.ma-bt-lg Account Information
+            div.cart
+                form#updateForm.form--login(action='/update-account' method='post')
+                    .form__group
+                        label.form__label(for='firstname') First Name
+                        input.form__input(type='text' name='firstname' value=user.firstname required)
+                    .form__group
+                        label.form__label(for='lastname') Last Name
+                        input.form__input(type='text' name='lastname' value=user.lastname required)
+                    .form__group
+                        label.form__label(for='email') Email address
+                        input.form__input(type='text' name='email' value=user.email required)
+                        //- input(type='password' name='password' placeholder='Current Password')
+                        //- input(type='password' name='newPassword' placeholder='New Password' )
+                    .form__group
+                        label.form__label(for='address') Address
+                        input.form__input(type='text' name='address' value=user.address required)
+                    .form__group
+                        label.form__label(for='phone') Phone Number
+                        input.form__input(type='text' name='phone' value=user.phone required)
+                    .form__group
+                        button.btn.btn--green(type='submit') Update Information
+                br
+                br
+                br
+                br
+                hr
+                br
+                br
+                br
+                br
+                h2.heading-secondary.ma-bt-lg Order History
+                br
+                form(method='get' action='/account')
+                    select.selection(name='sort')
+                        option(value='date') Sort by Date
+                        option(value='status') Sort by Status
+                        option(value='total') Sort by Total
+                br
+                br
+
+                each order in orders
+                    div.cart-item
+                    
+                        div.item-name= `Order ID: ${order.orderid}`
+                        div.item-price= `Total: ${order.amount}`
+                        div.item-price= `Date: ${order.date.toISOString().split('T')[0]}`
+                        div.item-price= `Status: ${order.status}`
+                        br
+                        br
+            script.
+                document.querySelector('select[name="sort"]').addEventListener('change', function() {
+                    window.location.href = '/account?sort=' + this.value; });
+        
