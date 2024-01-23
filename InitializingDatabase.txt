@@ -1,0 +1,199 @@
+
+-- SQL TO CREATE TABLES
+
+CREATE TABLE Employee (
+    EmployeeID SERIAL PRIMARY KEY,
+    Password TEXT NOT NULL,
+    FirstName TEXT,
+    LastName TEXT,
+    Position TEXT
+);
+
+CREATE TABLE Product (
+    ProductID SERIAL PRIMARY KEY,
+    Name VARCHAR(255),
+    Description TEXT,
+    Price DECIMAL(10, 2),
+    Stock INT,
+    ItemImage VARCHAR(255),
+    Category VARCHAR(50),
+    EmployeeID SERIAL,
+    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID)
+);
+
+
+CREATE TABLE Customer (
+    CustomerID SERIAL PRIMARY KEY,
+    FirstName TEXT,
+    LastName TEXT,
+    Email TEXT,
+    Password TEXT,
+    Address TEXT,
+    Phone TEXT
+);
+
+CREATE TABLE OrderT (
+    OrderID SERIAL PRIMARY KEY,
+    Total NUMERIC,
+    ShippingAddress TEXT,
+    Status TEXT,
+    CustomerID SERIAL REFERENCES Customer(CustomerID)
+);
+
+CREATE TABLE Payment (
+    PaymentID SERIAL PRIMARY KEY,
+    PaymentType TEXT,
+    PaymentStatus TEXT,
+    Amount NUMERIC,
+    OrderID SERIAL REFERENCES OrderT(OrderID),
+    Date DATE
+);
+
+CREATE TABLE Contains (
+    ProductID SERIAL REFERENCES Product(ProductID),
+    OrderID SERIAL REFERENCES OrderT(OrderID),
+    quantity INT,
+    PRIMARY KEY (ProductID, OrderID)
+);
+
+
+CREATE TABLE Camera (
+    Resolution VARCHAR(50),
+    LensType VARCHAR(50),
+    CameraType VARCHAR(50),
+    ProductID INT PRIMARY KEY NOT NULL,
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID) ON DELETE CASCADE
+);
+
+CREATE TABLE Laptop (
+    Processor VARCHAR(100),
+    RAM INT,
+    Storage VARCHAR(50),
+    ScreenSpecs VARCHAR(255),
+    ProductID INT PRIMARY KEY NOT NULL,
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID) ON DELETE CASCADE
+);
+
+CREATE TABLE Cellphone (
+    CameraResolution VARCHAR(50),
+    Storage VARCHAR(50),
+    Dimensions VARCHAR(100),
+    ProductID INT PRIMARY KEY NOT NULL,
+    FOREIGN KEY (ProductID) REFERENCES Product(ProductID) ON DELETE CASCADE
+);
+
+
+
+-- SQL TO INSERT INFORMATION INTO TABLES
+
+-- Insert data into the Employee table with more realistic passwords
+INSERT INTO Employee (EmployeeID, Password, FirstName, LastName, Position)
+VALUES
+    (985215185, 'P@ssw0rd1', 'John', 'Doe', 'Manager'),
+    (123458565, 'SecureSales123', 'Jane', 'Smith', 'Salesperson'),
+    (896232154, 'Employee#2023', 'Bob', 'Johnson', 'Technician'),
+    (452655224, 'SalesP@ss', 'Sarah', 'Wilson', 'Salesperson'),
+    (365564252, 'Tech2023!', 'Michael', 'Brown', 'Technician'),
+    (458814512, 'Manag3rPass', 'Emily', 'Davis', 'Manager'),
+    (755655658, 'D@ni3lSale$', 'Daniel', 'Anderson', 'Salesperson');
+
+
+
+-- Insert data into the Product table with more realistic product details
+INSERT INTO Product (ProductID, Name, Description, Price, Stock, ItemImage, Category, EmployeeID)
+VALUES
+    (239578596, 'Dell XPS 15', '15-inch laptop with Intel Core i7, 16GB RAM, and 512GB SSD', 1499.99, 50, 'dell-xps15.jpeg', 'Laptops', 896232154),
+    (986475126, 'iPhone 13 Pro', '6.1-inch smartphone with A15 Bionic chip and Pro Camera System', 999.99, 100, 'iphone13pro.jpeg', 'Cellphones', 458814512),
+    (475665565, 'Samsung Galaxy S22 Ultra', '6.8-inch 5G smartphone with a high-resolution camera system', 1199.99, 40, 'samsung-s22-ultra.jpeg', 'Cellphones', 452655224),
+    (124523544, 'Sony Alpha A6400', 'Mirrorless camera with 24.2MP sensor, 4K video, and fast autofocus', 999.99, 15, 'sony-alpha-a6400.jpeg', 'Cameras', 755655658),
+    (556218562, 'Dell XPS 13', '13.3-inch laptop with Intel Core i7, 16GB RAM', 1299.99, 25, 'dell-xps13.jpeg', 'Laptops', 985215185),
+    (475134579, 'iPhone SE', '4.7-inch budget-friendly smartphone with Apple A15 Bionic chip', 399.99, 50, 'iphone-se.jpeg', 'Cellphones', 123458565),
+    (325415664, 'Nikon Z6', 'Full-frame mirrorless camera with 24.5MP sensor and in-body stabilization', 1799.99, 10, 'nikon-z6.jpeg', 'Cameras', 365564252),
+    (789654321, 'MacBook Air', '13-inch laptop with Apple M2 chip, 32GB RAM, and 256GB SSD', 1299.99, 30, 'macbook-air.jpeg', 'Laptops', 896232154),
+    (987644321, 'Google Pixel 6', '6.4-inch 5G smartphone with a powerful camera system', 799.99, 60, 'google-pixel-6.jpeg', 'Cellphones', 458814512),
+    (456789012, 'Canon EOS 90D', 'DSLR camera with 32.5MP sensor, 4K video, and fast autofocus', 1199.99, 20, 'canon-eos-90d.jpeg', 'Cameras', 755655658),
+    (654321789, 'HP Spectre x360', '15.6-inch 2-in-1 laptop with Intel Core i7, 16GB RAM', 1499.99, 15, 'hp-spectre-x360.jpeg', 'Laptops', 985215185),
+    (987654328, 'Nikon D850', 'Full-frame DSLR camera with 45.7MP sensor, 4K video, and fast autofocus', 2499.99, 10, 'nikon-d850.jpeg', 'Cameras', 896232154),
+    (123456784, 'Sony A7 III', 'Mirrorless camera with 24.2MP sensor, 4K video, and 5-axis stabilization', 1999.99, 15, 'sony-a7-iii.jpeg', 'Cameras', 458814512),
+    (987654356, 'HP Envy x360', '15.6-inch 2-in-1 laptop with AMD Ryzen 7, 16GB RAM, and 512GB SSD', 1099.99, 20, 'hp-envy-x360.jpeg', 'Laptops', 755655658),
+    (123456774, 'Dell Inspiron 14', '14-inch laptop with Intel Core i5, 8GB RAM, and 256GB SSD', 799.99, 30, 'dell-inspiron-14.jpeg', 'Laptops', 365564252),
+    (987654329, 'Google Pixel 6 Pro', '6.7-inch 5G smartphone with a powerful camera system', 899.99, 50, 'google-pixel-6-pro.jpeg', 'Cellphones', 452655224),
+    (123456782, 'Samsung Galaxy A52', '6.5-inch budget-friendly smartphone with AMOLED display', 499.99, 40, 'samsung-galaxy-a52.jpeg', 'Cellphones', 123458565);
+
+
+
+-- Inserting customer information with more realistic passwords into the Customer table
+INSERT INTO Customer (CustomerID, FirstName, LastName, Email, Password, Address, Phone)
+VALUES
+    (574545232, 'Alice', 'Johnson', 'alice@email.com', 'SecurePass123', '123 Main St', '123-456-7890'),
+    (475145125, 'Bob', 'Smith', 'bob@email.com', 'P@ssw0rd456', '456 Elm St', '987-654-3210'),
+    (123456789, 'Charlie', 'Brown', 'charlie@email.com', 'StrongP@$$', '789 Oak St', '555-123-4567'),
+    (987654321, 'David', 'Wilson', 'david@email.com', 'Pa$$w0rd789', '456 Pine St', '333-999-8888'),
+    (111222333, 'Emma', 'Davis', 'emma@email.com', 'EmmaSecure2023', '321 Maple St', '222-555-7777'),
+    (777888999, 'Frank', 'Anderson', 'frank@email.com', 'Fr@nkA123', '654 Elm St', '444-666-2222'),
+    (654987321, 'Grace', 'Parker', 'grace@email.com', 'Gr@ce2023', '987 Willow St', '777-111-3333');
+
+
+
+-- Insert data into the Order table with more order records
+INSERT INTO OrderT (OrderID, Total, ShippingAddress, Status, CustomerID)
+VALUES
+    (754545876, 100.00, '789 Oak St', 'Shipped', 574545232),
+    (455574515, 75.50, '456 Pine St', 'Processing', 123456789),
+    (963214578, 225.75, '123 Elm St', 'Delivered', 475145125),
+    (785456123, 50.20, '987 Maple St', 'Shipped', 987654321),
+    (332211443, 112.90, '567 Birch St', 'Processing', 111222333),
+    (147852369, 95.60, '321 Oak St', 'Shipped', 777888999),
+    (985657466, 120.00, '987 Willow St', 'Processing', 654987321);
+
+
+
+-- Insert data into the Payment table with more payment records
+INSERT INTO Payment (PaymentID, PaymentType, PaymentStatus, Amount, OrderID, Date)
+VALUES
+    (478454564, 'Credit Card', 'Success', 100.00, 754545876, '2023-01-15'),
+    (852555847, 'PayPal', 'Pending', 75.50, 455574515, '2023-01-20'),
+    (988865845, 'Credit Card', 'Success', 225.75, 963214578, '2023-02-10'),
+    (554745555, 'PayPal', 'Success', 50.20, 785456123, '2023-02-20'),
+    (669968475, 'Credit Card', 'Pending', 112.90, 332211443, '2023-03-05'),
+    (554475551, 'PayPal', 'Success', 95.60, 147852369, '2023-03-15'),
+    (488565488, 'Credit Card', 'Success', 120.00, 985657466, '2023-04-01');
+
+
+-- Insert data into the Contains table (representing the products in orders)
+INSERT INTO Contains (ProductID, OrderID, quantity)
+VALUES
+    (986475126, 754545876, 4),
+    (475665565, 147852369, 2),
+    (325415664, 332211443, 1),
+    (475134579, 985657466, 2),
+    (325415664, 455574515, 1),
+    (124523544, 963214578, 3),
+    (556218562, 785456123, 4);
+    
+INSERT INTO Camera (Resolution, LensType, CameraType, ProductID)
+VALUES
+    ('20 MP', 'Zoom Lens', 'DSLR', 124523544),
+    ('24 MP', 'Wide-Angle Lens', 'Mirrorless', 325415664),
+    ('16 MP', 'Standard Lens', 'Mirrorless', 456789012),
+    ('45.7 MP', 'Wide-Angle Lens', 'DSLR', 987654328),
+    ('24.2 MP', 'Standard Lens', 'Mirrorless', 123456784);
+
+INSERT INTO Laptop (Processor, RAM, Storage, ScreenSpecs, ProductID)
+VALUES
+    ('Intel Core i7', 16, '512GB SSD', '13.3-inch Full HD', 556218562),
+    ('Intel Core i7', 16, '512GB SSD', '15-inch 4K UHD', 239578596),
+    ('Apple M2', 32, '256GB SSD', '13-inch Retina Display', 789654321),
+    ('Intel Core i7', 16, '512GB SSD', '15.6-inch 4K UHD', 654321789),
+    ('AMD Ryzen 7', 16, '512GB SSD', '15.6-inch Full HD', 987654356),
+    ('Intel Core i5', 8, '256GB SSD', '14-inch Full HD', 123456774);
+
+INSERT INTO Cellphone (CameraResolution, Storage, Dimensions, ProductID)
+VALUES
+    ('12 MP', '128GB', '5.9 x 2.8 x 0.3 inches', 475134579),
+    ('108 MP', '256GB', '6.5 x 3.0 x 0.4 inches', 986475126),
+    ('108 MP', '256GB', '6.8 x 3.1 x 0.4 inches', 475665565),
+    ('50 MP', '512GB', '6.2 x 3.0 x 0.3 inches', 987644321),
+    ('50 MP', '256GB', '6.7 x 3.1 x 0.4 inches', 987654329),
+    ('32 MP', '128GB', '6.5 x 3.0 x 0.3 inches', 123456782);
+
