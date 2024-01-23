@@ -1,4 +1,5 @@
-Project Description:    
+Project Description:
+
 The objective of this Database Design project was to create an interface for an online electronic store and support it using a PostgreSQL database. 
 
 Objectives:
@@ -45,19 +46,26 @@ Product view when logged in:
 Cart:
 ![3356c57d-a5c8-46d2-b2d3-2b2a5e96b1f9_rw_1920](https://github.com/tzitouni1/Eli-s-Electronic-E-Store/assets/157538304/3efd8998-240e-46e4-8303-7c42983d07cd)
 
+Checkout:
 ![78528879-2ce1-40fa-84f1-022c627689f9_rw_1920](https://github.com/tzitouni1/Eli-s-Electronic-E-Store/assets/157538304/191cbb90-cd72-4cff-b5dd-9c7bde002c89)
 
+User account information:
 ![9c78da7f-1105-44e5-bf74-3c35c3dac76a_rw_1920](https://github.com/tzitouni1/Eli-s-Electronic-E-Store/assets/157538304/3c21e636-a7f2-4c54-928f-f336c2d48d98)
 
+User's order history:
 ![5dca26ff-1274-4bc5-8f4d-a599c65977bc_rw_1920](https://github.com/tzitouni1/Eli-s-Electronic-E-Store/assets/157538304/0a60f465-b10c-437f-b829-71c6203b2fb0)
 
+Employee login:
 ![cf03da8c-02ed-4d4d-8b75-9179b0c93055_rw_1920](https://github.com/tzitouni1/Eli-s-Electronic-E-Store/assets/157538304/a0c4cbc3-6916-439b-b6df-15885f8c671b)
 
+Employee Dashboard:
 ![9dc0bfa2-923b-4bed-b319-c6a6dff14ed6_rw_1920](https://github.com/tzitouni1/Eli-s-Electronic-E-Store/assets/157538304/e56b9bef-d968-4321-8497-9d4036df0983)
 
+Employee product listiings page to update product information:
 ![e69f3528-524c-400c-96b5-4cda6022e8f6_rw_1920](https://github.com/tzitouni1/Eli-s-Electronic-E-Store/assets/157538304/e88545c4-1d38-437b-9592-b88a1a6b7bca)
 
 ![b9d82bfb-a49b-4b24-9257-872e17777c55_rw_1920](https://github.com/tzitouni1/Eli-s-Electronic-E-Store/assets/157538304/33bac526-d4ca-40b3-8e96-8c43244f5161)
 
+Employee page to update orders:
 ![e094b1e3-0c10-45ba-b222-e91d827fe8de_rw_1920](https://github.com/tzitouni1/Eli-s-Electronic-E-Store/assets/157538304/6a3a6e68-3205-48b8-8751-2bce51431d00)
 
